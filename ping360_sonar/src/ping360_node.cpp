@@ -200,6 +200,7 @@ void Ping360Sonar::publishScan(const rclcpp::Time &now, bool end_turn)
       {
         this_range = range;
         this_intensity = data[index]/255.f;
+        // RCLCPP_WARN(get_logger(), "Break");
         break;
       }
     }
@@ -226,6 +227,7 @@ void Ping360Sonar::publishScan(const rclcpp::Time &now, bool end_turn)
     }
     scan.header.set__stamp(now);
     scan_pub->publish(scan);
+    // RCLCPP_WARN(get_logger(), "Published");
   }
 }
 
@@ -258,10 +260,10 @@ void Ping360Sonar::refresh()
   const auto now{this->now()};
   if(publish_echo && echo_pub->get_subscription_count())
     publishEcho(now);
-
+  
   if(publish_image)
     refreshImage();
-
+  
   if(publish_scan && scan_pub->get_subscription_count())
     publishScan(now, end_turn);
 }
