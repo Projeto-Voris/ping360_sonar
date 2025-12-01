@@ -227,7 +227,7 @@ void Ping360Sonar::publishScan(const rclcpp::Time &now, bool end_turn)
     }
     scan.header.set__stamp(now);
     scan_pub->publish(scan);
-    // RCLCPP_WARN(get_logger(), "Published");
+    // RCLCPP_WARN(get_logger(), "scan foi publicado");
   }
 }
 
@@ -249,8 +249,16 @@ void Ping360Sonar::refreshImage()
 
 void Ping360Sonar::refresh()
 {
+
+  // auto start = std::chrono::high_resolution_clock::now(); // debug de tempo
+
   const auto &[valid, end_turn] = sonar.read(); {}
+
+  // auto stop = std::chrono::high_resolution_clock::now(); // debug de tempo
+  // auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start); // debug de tempo
   
+  // RCLCPP_WARN(get_logger(), "A função read() levou: %ld ms", duration.count()); // debug de tempo
+
   if(!valid)
   {
     RCLCPP_WARN(get_logger(), "Cannot communicate with sonar");

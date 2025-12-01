@@ -27,11 +27,12 @@ def generate_launch_description():
         DeclareLaunchArgument('connection_type', default_value='serial', description='Type of connection (serial/udp).'),
         DeclareLaunchArgument('udp_address', default_value='0.0.0.0', description='UDP address for the sonar.'),
         DeclareLaunchArgument('udp_port', default_value='12345', description='UDP port for the sonar.'),
-
+        DeclareLaunchArgument('namespace', default_value='', description='Namespace for the sonar node.'),
         Node(
             package='ping360_sonar',
             executable='ping360_node',
             name='ping360',
+            namespace=LaunchConfiguration('namespace'),
             output='screen',
             parameters=[
                 {'gain': LaunchConfiguration('gain')},
